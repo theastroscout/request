@@ -1,6 +1,5 @@
-# Request
-## The simplest and lightest Post or Get Request Module
-Node.js module for sending simple GET or POST requests.
+# Request.js
+The simplest and lightest Node.js module for sending Post or Get Requests.
 
 <br/>
 
