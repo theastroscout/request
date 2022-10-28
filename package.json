@@ -1,8 +1,11 @@
 {
-  "name": "request",
+  "name": "@hqdaemon/request",
   "version": "1.0.0",
-  "description": "The simplest and lightest Post or Get Request Module",
+  "description": "The simplest and lightest Node.js module for sending Post or Get Requests.",
   "main": "src/request.js",
+  "directories": {
+    "test": "test"
+  },
   "scripts": {
     "test": "node test/test"
   },
@@ -14,7 +17,7 @@
     "request",
     "post",
     "get",
-    "node.js"
+    "nodejs"
   ],
   "author": {
     "name": "Alexander Yermolenko",
