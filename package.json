@@ -1,0 +1,28 @@
+{
+  "name": "request",
+  "version": "1.0.0",
+  "description": "The simplest and lightest Post or Get Request Module",
+  "main": "src/request.js",
+  "scripts": {
+    "test": "node test/test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hqdaemon/request.git"
+  },
+  "keywords": [
+    "request",
+    "post",
+    "get",
+    "node.js"
+  ],
+  "author": {
+    "name": "Alexander Yermolenko",
+    "url": "https://surfy.one"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hqdaemon/request/issues"
+  },
+  "homepage": "https://github.com/hqdaemon/request#readme"
+}
