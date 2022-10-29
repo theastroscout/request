@@ -1,6 +1,6 @@
 {
   "name": "@hqdaemon/request",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The simplest and lightest Node.js module for sending Post or Get Requests.",
   "main": "src/request.js",
   "directories": {
