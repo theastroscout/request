@@ -1,5 +1,6 @@
 # Request.js
 The simplest and lightest Node.js module for sending Post or Get Requests.
+You can use both HTTPS as well as HTTP for your own purposes.
 
 <br/>
 
@@ -84,7 +85,13 @@ let options = {
 	}
 };
 
-// Send Request
+/*
+
+Send Request
+Result: JSON, String or False if error has occurred
+
+*/
+
 let result = await request(options);
 
 ```

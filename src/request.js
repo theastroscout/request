@@ -18,7 +18,24 @@ let request = settings => {
 	} = settings;
 
 	return new Promise(resolve => {
-		url = new URL(url);
+
+		/*
+
+		Parse URL
+
+		*/
+		
+		try {
+			url = new URL(url)
+		} catch(e){
+			url = false;
+		}
+
+		if(url === false){
+			console.log("Request: Can't parse URL");
+			resolve(false);
+			return false;
+		}
 		
 		/*
 
@@ -125,9 +142,8 @@ let request = settings => {
 
 		*/
 
-		req.on("error", (e) => {
-			console.error(`Problem with request: ${e.message}`);
-			console.log(url)
+		req.on("error", e => {
+			console.error(`Request: ${e.message}`);			
 			resolve(false);
 		});
 
