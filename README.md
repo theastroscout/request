@@ -39,6 +39,7 @@ let options = {
 	/*
 	
 	Query params
+	Object or String
 	Default {}
 
 	*/
@@ -63,7 +64,16 @@ let options = {
 	*/
 
 	headers: {
-		"-x-your-header-param": "Some value"
+		"-x-your-header-param": "Some value",
+
+		/*
+
+		You can override Content-Type
+		Default "application/json"
+
+		*/
+
+		"Content-Type": "application/x-www-form-urlencoded"
 	}
 };
 
