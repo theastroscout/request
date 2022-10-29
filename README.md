@@ -13,9 +13,16 @@ The module will try to convert the received information into JSON.
 If it fails output Plain Text.
 
 ```js
+
+// Import library
 const request = require("@hqdaemon/request");
 
-// To String
+/*
+
+Request Options
+
+*/
+
 let options = {
 
 	/*
@@ -77,6 +84,7 @@ let options = {
 	}
 };
 
+// Send Request
 let result = await request(options);
 
 ```
