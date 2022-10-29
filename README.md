@@ -9,7 +9,7 @@ You can use both HTTPS as well as HTTP for your own purposes.
 npm install @hqdaemon/request
 ```
 
-## Usage Node.js
+## Usage with Node.js
 The module will try to convert the received information into JSON.
 If it fails output Plain Text.
 
