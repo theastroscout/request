@@ -17,9 +17,19 @@ let request = settings => {
 		headers = false
 	} = settings;
 
-	return new Promise( resolve => {
+	return new Promise(resolve => {
 		url = new URL(url);
-		const postData = JSON.stringify(params);
+		
+		/*
+
+		Post Data
+
+		*/
+		
+		const postData = params;
+		if(typeof postData !== "string"){
+			postData = JSON.stringify(postData);
+		}
 
 		/*
 
