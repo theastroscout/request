@@ -20,7 +20,7 @@ let options = {
 
 	/*
 
-	Full requested URL without quries
+	Full requested URL without queries
 
 	*/
 
