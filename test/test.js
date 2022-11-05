@@ -6,7 +6,7 @@ Testing Request Module
 
 process.env.test = true;
 const request = require("../src/request");
-const querystring = require('node:querystring');
+const querystring = require("node:querystring");
 
 let test1 = async () => {
 	let result = await request({
@@ -23,6 +23,8 @@ let test1 = async () => {
 	
 	console.log("Result", JSON.stringify(result, null, "\t"));
 };
+
+test1();
 
 let test2 = async () => {
 	let options = {
