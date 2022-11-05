@@ -1,5 +1,5 @@
 {
-  "name": "@hqdaemon/request",
+  "name": "@surfy/request",
   "version": "1.0.2",
   "description": "The simplest and lightest Node.js module for sending Post or Get Requests.",
   "main": "src/request.js",

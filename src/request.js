@@ -26,7 +26,7 @@ let request = settings => {
 		*/
 		
 		try {
-			url = new URL(url)
+			url = new URL(url);
 		} catch(e){
 			url = false;
 		}
