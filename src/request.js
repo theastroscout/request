@@ -12,7 +12,7 @@ let request = settings => {
 	let {
 		url,
 		method = "POST",
-		params,
+		params = "",
 		auth = false,
 		headers = false
 	} = settings;
