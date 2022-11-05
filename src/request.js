@@ -43,7 +43,7 @@ let request = settings => {
 
 		*/
 		
-		const postData = params;
+		let postData = params;
 		if(typeof postData !== "string"){
 			postData = JSON.stringify(postData);
 		}
