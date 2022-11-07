@@ -6,7 +6,7 @@ You can use both HTTPS as well as HTTP for your own purposes.
 
 ## Installation
 ```
-npm install @hqdaemon/request
+npm install @surfy/request
 ```
 
 ## Usage with Node.js
@@ -16,7 +16,7 @@ If it fails output Plain Text.
 ```js
 
 // Import library
-const request = require("@hqdaemon/request");
+import request from "@surfy/request";
 
 /*
 
@@ -96,8 +96,6 @@ let result = await request(options);
 
 ```
 
-<br />
-<br />
 <br />
 <br />
 
