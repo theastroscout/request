@@ -36,6 +36,15 @@ let options = {
 
 	/*
 
+	Specific Port
+	If not specified, set based on protocol: https 443, http 80
+
+	*/
+	
+	port: 587,
+
+	/*
+
 	Request Method
 	Values: "GET" or "POST"
 	Default "POST"

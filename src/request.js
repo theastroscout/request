@@ -11,6 +11,7 @@ let request = settings => {
 
 	let {
 		url,
+		port = false,
 		method = "POST",
 		params = "",
 		auth = false,
@@ -32,7 +33,7 @@ let request = settings => {
 		}
 
 		if(url === false){
-			console.log("Request: Can't parse URL");
+			console.log("@Surfy/Request: Can't parse URL");
 			resolve(false);
 			return false;
 		}
@@ -56,7 +57,7 @@ let request = settings => {
 		
 		let options = {
 			hostname: url.hostname,
-			port: url.protocol === "https:" ? 443 : 80,
+			port: port ? port : url.protocol === "https:" ? 443 : 80,
 			path: url.pathname,
 			method: method,
 			headers: {
@@ -143,7 +144,7 @@ let request = settings => {
 		*/
 
 		req.on("error", e => {
-			console.error(`Request: ${e.message}`);			
+			console.error(`@Surfy/Request Error: ${e.message}`);			
 			resolve(false);
 		});
 
