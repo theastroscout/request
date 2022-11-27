@@ -4,8 +4,9 @@ Request Module
 
 */
 
-const https = require("https");
-const http = require("http");
+const https = require('https');
+const http = require('http');
+const zlib = require('node:zlib');
 
 let request = settings => {
 
@@ -61,8 +62,8 @@ let request = settings => {
 			path: url.pathname,
 			method: method,
 			headers: {
-				'Content-Type': 'application/json',
-				'Content-Length': Buffer.byteLength(postData)
+				// 'Content-Type': 'application/json',
+				// 'Content-Length': Buffer.byteLength(postData)
 			}
 		};
 
@@ -116,7 +117,6 @@ let request = settings => {
 
 		const req = driver.request(options,
 			res => {
-				// res.setEncoding("utf8");
 				
 				let chunks = [];
 
@@ -126,11 +126,29 @@ let request = settings => {
 
 				res.on("end", () => {
 					let data = Buffer.concat(chunks);
+
+					/*
+
+					Decompress JSON Data
+
+					*/
 					
-					try {
-						data = JSON.parse(data.toString());
-					} catch(e){
-						// Continue regardless error
+					if(res.headers['content-encoding'] === 'gzip'){
+						data = zlib.gunzipSync(data);
+					}
+					
+					/*
+
+					Parse JSON
+
+					*/
+
+					if(/json/.test(res.headers['content-type'])){
+						try {
+							data = JSON.parse(data.toString());
+						} catch(e){
+							// Continue regardless error
+						}
 					}
 
 					resolve(data);
