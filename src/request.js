@@ -61,8 +61,8 @@ let request = settings => {
 			path: url.pathname,
 			method: method,
 			headers: {
-				"Content-Type": "application/json",
-				"Content-Length": Buffer.byteLength(postData)
+				'Content-Type': 'application/json',
+				'Content-Length': Buffer.byteLength(postData)
 			}
 		};
 
@@ -94,15 +94,15 @@ let request = settings => {
 
 		*/
 
-		if(method === "GET"){
-			let query = Object.entries(params).map(v => v.join("=")).join("&");
-			options.path += "?"+encodeURI(query);
-			delete options.headers["Content-Length"];
+		if(method === 'GET'){
+			let query = Object.entries(params).map(v => v[0]+'='+encodeURIComponent(v[1])).join("&");
+			options.path += "?"+query;
+			delete options.headers['Content-Length'];
 		}
 
 		/*
 
-		Choose a drive
+		Choose a driver
 
 		*/
 
@@ -116,18 +116,19 @@ let request = settings => {
 
 		const req = driver.request(options,
 			res => {
-				res.setEncoding("utf8");
+				// res.setEncoding("utf8");
 				
-				let data = "";
+				let chunks = [];
 
 				res.on("data", chunk => {
-					data+=chunk;
+					chunks.push(chunk);
 				});
 
 				res.on("end", () => {
-
+					let data = Buffer.concat(chunks);
+					
 					try {
-						data = JSON.parse(data);
+						data = JSON.parse(data.toString());
 					} catch(e){
 						// Continue regardless error
 					}

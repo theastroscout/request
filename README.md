@@ -97,7 +97,7 @@ let options = {
 /*
 
 Send Request
-Result: JSON, String or False if error has occurred
+Result: JSON or Buffer, but False if error has occurred
 
 */
 
