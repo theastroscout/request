@@ -1,6 +1,6 @@
 {
   "name": "@surfy/request",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "The simplest and lightest Node.js module for sending Post or Get Requests.",
   "main": "src/request.js",
   "directories": {
