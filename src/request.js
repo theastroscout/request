@@ -62,8 +62,8 @@ let request = settings => {
 			path: url.pathname,
 			method: method,
 			headers: {
-				// 'Content-Type': 'application/json',
-				// 'Content-Length': Buffer.byteLength(postData)
+				'Content-Type': 'application/json',
+				'Content-Length': Buffer.byteLength(postData)
 			}
 		};
 
