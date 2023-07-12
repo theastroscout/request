@@ -1,31 +1,31 @@
 {
-  "name": "@surfy/request",
-  "version": "1.0.8",
-  "description": "The simplest and lightest Node.js module for sending Post or Get Requests.",
-  "main": "src/request.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "test": "node test/test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/hqdaemon/request.git"
-  },
-  "keywords": [
-    "request",
-    "post",
-    "get",
-    "nodejs"
-  ],
-  "author": {
-    "name": "Alexander Yermolenko",
-    "url": "https://surfy.one"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/hqdaemon/request/issues"
-  },
-  "homepage": "https://github.com/hqdaemon/request#readme"
+	"name": "@surfy/request",
+	"version": "1.0.8",
+	"description": "The simplest and lightest Node.js module for sending Post or Get Requests.",
+	"main": "src/request.js",
+	"directories": {
+		"test": "test"
+	},
+	"scripts": {
+		"test": "node test/test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hqdaemon/request.git"
+	},
+	"keywords": [
+		"request",
+		"post",
+		"get",
+		"nodejs"
+	],
+	"author": {
+		"name": "Alexander Yermolenko",
+		"url": "https://surfy.one"
+	},
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/hqdaemon/request/issues"
+	},
+	"homepage": "https://github.com/hqdaemon/request#readme"
 }

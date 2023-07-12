@@ -13,8 +13,8 @@ let request = settings => {
 	let {
 		url,
 		port = false,
-		method = "POST",
-		params = "",
+		method = 'POST',
+		params = '',
 		auth = false,
 		headers = false
 	} = settings;
@@ -34,9 +34,15 @@ let request = settings => {
 		}
 
 		if(url === false){
-			console.log("@Surfy/Request: Can't parse URL");
+			console.log('@Surfy/Request: Can\'t parse URL');
 			resolve(false);
 			return false;
+		}
+
+		// Override Port
+		
+		if(url.port){
+			port = url.port;
 		}
 		
 		/*
@@ -46,7 +52,7 @@ let request = settings => {
 		*/
 		
 		let postData = params;
-		if(typeof postData !== "string"){
+		if(typeof postData !== 'string'){
 			postData = JSON.stringify(postData);
 		}
 
@@ -58,7 +64,7 @@ let request = settings => {
 		
 		let options = {
 			hostname: url.hostname,
-			port: port ? port : url.protocol === "https:" ? 443 : 80,
+			port: port ? port : url.protocol === 'https:' ? 443 : 80,
 			path: url.pathname,
 			method: method,
 			headers: {
@@ -96,8 +102,9 @@ let request = settings => {
 		*/
 
 		if(method === 'GET'){
-			let query = Object.entries(params).map(v => v[0]+'='+encodeURIComponent(v[1])).join("&");
-			options.path += "?"+query;
+			options.headers['Content-Type'] = 'x-www-form-urlencoded';
+			let query = Object.entries(params).map(v => v[0]+'='+encodeURIComponent(v[1])).join('&');
+			options.path += '?'+query;
 			delete options.headers['Content-Length'];
 		}
 
@@ -107,7 +114,7 @@ let request = settings => {
 
 		*/
 
-		let driver = url.protocol === "https:" ? https : http;
+		let driver = url.protocol === 'https:' ? https : http;
 		
 		/*
 
@@ -120,11 +127,11 @@ let request = settings => {
 				
 				let chunks = [];
 
-				res.on("data", chunk => {
+				res.on('data', chunk => {
 					chunks.push(chunk);
 				});
 
-				res.on("end", () => {
+				res.on('end', () => {
 					let data = Buffer.concat(chunks);
 
 					/*
@@ -162,12 +169,12 @@ let request = settings => {
 
 		*/
 
-		req.on("error", e => {
-			console.error(`@Surfy/Request Error: ${e.message}`);			
+		req.on('error', e => {
+			console.error(`@Surfy/Request Error: ${e.message}`);
 			resolve(false);
 		});
 
-		if(method === "POST"){
+		if(method === 'POST'){
 			req.write(postData);
 		}
 

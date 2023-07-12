@@ -1,0 +1,7 @@
+__pycache__
+node_modules
+.config
+.build
+.DS_Store
+test
+*.sublime-project
