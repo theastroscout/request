@@ -110,7 +110,7 @@ let result = await request(options);
 
 ## MIT License
 
-Copyright (c) Alexander Yermolenko • [surfy.one](https://surfy.one)
+Alexander Yermolenko • [surfy.one](https://surfy.one)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
