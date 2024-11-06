@@ -33,15 +33,14 @@ let request = settings => {
 			url = false;
 		}
 
-		if(url === false){
+		if (url === false) {
 			console.log('@Surfy/Request: Can\'t parse URL');
 			resolve(false);
 			return false;
 		}
 
 		// Override Port
-		
-		if(url.port){
+		if (url.port) {
 			port = url.port;
 		}
 		
@@ -52,7 +51,7 @@ let request = settings => {
 		*/
 		
 		let postData = params;
-		if(typeof postData !== 'string'){
+		if (typeof postData !== 'string') {
 			postData = JSON.stringify(postData);
 		}
 
@@ -79,7 +78,7 @@ let request = settings => {
 
 		*/
 
-		if(auth){
+		if (auth) {
 			options.headers.Authorization = auth;
 		}
 
@@ -89,7 +88,7 @@ let request = settings => {
 
 		*/
 
-		if(headers){
+		if (headers) {
 			for(let header in headers){
 				options.headers[header] = headers[header];
 			}
@@ -101,7 +100,7 @@ let request = settings => {
 
 		*/
 
-		if(method === 'GET'){
+		if (method === 'GET') {
 			options.headers['Content-Type'] = 'x-www-form-urlencoded';
 			let query = Object.entries(params).map(v => v[0]+'='+encodeURIComponent(v[1])).join('&');
 			options.path += '?'+query;
@@ -143,6 +142,29 @@ let request = settings => {
 					if(res.headers['content-encoding'] === 'gzip'){
 						data = zlib.gunzipSync(data);
 					}
+
+					/*
+
+					Determine Charset for Decoding
+
+					*/
+
+					// Default to UTF-8 if no charset is specified
+					let encoding = 'utf-8';
+
+					// Check if Content-Type specifies a charset
+					const contentType = res.headers['content-type'];
+					const matches = /charset=([^;]+)/i.exec(contentType);
+					if (matches && matches[1]) {
+						encoding = matches[1].toLowerCase();
+
+						if (encoding === 'iso-8859-1') {
+							encoding = 'latin1';
+						}
+					}
+
+					// Decode the data based on the determined encoding
+					data = data.toString(encoding);
 					
 					/*
 
@@ -152,7 +174,7 @@ let request = settings => {
 
 					if(/json/.test(res.headers['content-type'])){
 						try {
-							data = JSON.parse(data.toString());
+							data = JSON.parse(data);
 						} catch(e){
 							// Continue regardless error
 						}
@@ -174,7 +196,7 @@ let request = settings => {
 			resolve(false);
 		});
 
-		if(method === 'POST'){
+		if (method === 'POST') {
 			req.write(postData);
 		}
 
