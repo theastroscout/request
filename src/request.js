@@ -1,198 +1,108 @@
-/*
+import https from 'https';
+import http from 'http';
+import zlib from 'node:zlib';
 
-Request Module
-
-*/
-
-const https = require('https');
-const http = require('http');
-const zlib = require('node:zlib');
-
-let request = settings => {
-
-	let {
-		url,
-		port = false,
-		method = 'POST',
-		params = '',
-		auth = false,
-		headers = false
-	} = settings;
-
+const request = ({
+	url,
+	port = false,
+	method = 'POST',
+	params = '',
+	auth = false,
+	headers = false,
+	timeout = 2000
+}) => {
 	return new Promise(resolve => {
-
-		/*
-
-		Parse URL
-
-		*/
-		
 		try {
 			url = new URL(url);
-		} catch(e){
-			url = false;
-		}
-
-		if (url === false) {
-			console.log('@Surfy/Request: Can\'t parse URL');
+		} catch (e) {
+			console.log('@Surfy/request: Can\'t parse URL');
 			resolve(false);
-			return false;
+			return;
 		}
 
-		// Override Port
 		if (url.port) {
 			port = url.port;
 		}
-		
-		/*
 
-		Post Data
-
-		*/
-		
 		let postData = params;
 		if (typeof postData !== 'string') {
 			postData = JSON.stringify(postData);
 		}
 
-		/*
-
-		Contruct options
-
-		*/
-		
-		let options = {
+		const options = {
 			hostname: url.hostname,
-			port: port ? port : url.protocol === 'https:' ? 443 : 80,
+			port: port || (url.protocol === 'https:' ? 443 : 80),
 			path: url.pathname,
-			method: method,
+			method,
 			headers: {
 				'Content-Type': 'application/json',
 				'Content-Length': Buffer.byteLength(postData)
-			}
+			},
+			timeout
 		};
-
-		/*
-
-		Authorization
-
-		*/
 
 		if (auth) {
 			options.headers.Authorization = auth;
 		}
 
-		/*
-
-		Headers
-
-		*/
-
 		if (headers) {
-			for(let header in headers){
+			for (const header in headers) {
 				options.headers[header] = headers[header];
 			}
 		}
 
-		/*
-
-		Processing Quries for GET Request
-
-		*/
-
 		if (method === 'GET') {
 			options.headers['Content-Type'] = 'x-www-form-urlencoded';
-			let query = Object.entries(params).map(v => v[0]+'='+encodeURIComponent(v[1])).join('&');
-			options.path += '?'+query;
+			const query = Object.entries(params)
+				.map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
+				.join('&');
+			options.path += `?${query}`;
 			delete options.headers['Content-Length'];
 		}
 
-		/*
+		const driver = url.protocol === 'https:' ? https : http;
+		const req = driver.request(options, res => {
+			const chunks = [];
 
-		Choose a driver
+			res.on('data', chunk => {
+				chunks.push(chunk);
+			});
 
-		*/
+			res.on('end', () => {
+				let data = Buffer.concat(chunks);
 
-		let driver = url.protocol === 'https:' ? https : http;
-		
-		/*
+				if (res.headers['content-encoding'] === 'gzip') {
+					data = zlib.gunzipSync(data);
+				}
 
-		Request
+				let encoding = 'utf-8';
+				const contentType = res.headers['content-type'];
+				const matches = /charset=([^;]+)/i.exec(contentType);
+				if (matches?.[1]) {
+					encoding = matches[1].toLowerCase();
+					if (encoding === 'iso-8859-1') encoding = 'latin1';
+				}
 
-		*/
+				data = data.toString(encoding);
 
-		const req = driver.request(options,
-			res => {
-				
-				let chunks = [];
+				if (/json/.test(res.headers['content-type'])) {
+					try {
+						data = JSON.parse(data);
+					} catch {}
+				}
 
-				res.on('data', chunk => {
-					chunks.push(chunk);
-				});
-
-				res.on('end', () => {
-					let data = Buffer.concat(chunks);
-
-					/*
-
-					Decompress JSON Data
-
-					*/
-					
-					if(res.headers['content-encoding'] === 'gzip'){
-						data = zlib.gunzipSync(data);
-					}
-
-					/*
-
-					Determine Charset for Decoding
-
-					*/
-
-					// Default to UTF-8 if no charset is specified
-					let encoding = 'utf-8';
-
-					// Check if Content-Type specifies a charset
-					const contentType = res.headers['content-type'];
-					const matches = /charset=([^;]+)/i.exec(contentType);
-					if (matches && matches[1]) {
-						encoding = matches[1].toLowerCase();
-
-						if (encoding === 'iso-8859-1') {
-							encoding = 'latin1';
-						}
-					}
-
-					// Decode the data based on the determined encoding
-					data = data.toString(encoding);
-					
-					/*
-
-					Parse JSON
-
-					*/
-
-					if(/json/.test(res.headers['content-type'])){
-						try {
-							data = JSON.parse(data);
-						} catch(e){
-							// Continue regardless error
-						}
-					}
-
-					resolve(data);
-				});
-			}
-		);
-
-		/*
-
-		Error Handler
-
-		*/
+				resolve(data);
+			});
+		});
 
 		req.on('error', e => {
-			console.error(`@Surfy/Request Error: ${e.message}`);
+			console.error(`@Surfy/request Error: ${e.message}`);
+			resolve(false);
+		});
+
+		req.setTimeout(timeout, () => {
+			console.error(`@Surfy/request Timeout after ${timeout}ms`);
+			req.abort();
 			resolve(false);
 		});
 
@@ -204,4 +114,4 @@ let request = settings => {
 	});
 };
 
-module.exports = request;
+export default request;

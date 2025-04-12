@@ -1,8 +1,13 @@
 {
 	"name": "@surfy/request",
-	"version": "1.0.8",
+	"version": "1.0.9",
 	"description": "The simplest and lightest Node.js module for sending Post or Get Requests.",
-	"main": "src/request.js",
+	"type": "module",
+	"main": "./cjs/request.cjs",
+	"exports": {
+		"import": "./esm/request.js",
+		"require": "./cjs/request.cjs"
+	},
 	"directories": {
 		"test": "test"
 	},
@@ -11,7 +16,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/hqdaemon/request.git"
+		"url": "git+https://github.com/theastroscout/request.git"
 	},
 	"keywords": [
 		"request",
@@ -23,9 +28,9 @@
 		"name": "Alexander Yermolenko",
 		"url": "https://surfy.one"
 	},
-	"license": "MIT",
+	"license": "Unlicense",
 	"bugs": {
-		"url": "https://github.com/hqdaemon/request/issues"
+		"url": "https://github.com/theastroscout/request/issues"
 	},
-	"homepage": "https://github.com/hqdaemon/request#readme"
+	"homepage": "https://github.com/theastroscout/request#readme"
 }
