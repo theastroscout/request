@@ -26,82 +26,44 @@ Request Options
 
 let options = {
 
-	/*
-
-	Full requested URL without queries
-
-	*/
-
+	// Full requested URL without queries
 	url: "https://example.com",
 
-	/*
-
-	Specific Port
-	If not specified, set based on protocol: https 443, http 80
-
-	*/
-	
+	// Specific Port
+	// If not specified, set based on protocol: https 443, http 80
 	port: 587,
 
-	/*
-
-	Request Method
-	Values: "GET" or "POST"
-	Default "POST"
-
-	*/
-
+	// Request Method
+	// Values: "GET" or "POST"
+	// Default "POST"
 	method: "GET",
 
-	/*
-	
-	Query params
-	Object or String
-	Default {}
-
-	*/
-
+	// Query params
+	// Object or String
+	// Default {}
 	params: {
 		firstParam: "firstValue",
 		secondParam: "secondValue"
 	},
 
-	/*
-
-	Authorization header
-	Default False
-
-	*/
+	// Authorization header, Default False
 
 	auth: "AUTH_STRING",
 
-	/*
-		Additional Headers
-		Default False
-	*/
+	// Additional Headers, Default False
 
 	headers: {
 		"-x-your-header-param": "Some value",
 
-		/*
-
-		You can override Content-Type
-		Default "application/json"
-
-		*/
-
+		// You can override Content-Type, Default "application/json"
 		"Content-Type": "application/x-www-form-urlencoded"
 	}
 };
 
-/*
+// Send Request
+// Result: JSON or Buffer, but False if error has occurred
 
-Send Request
-Result: JSON or Buffer, but False if error has occurred
-
-*/
-
-let result = await request(options);
+const result = await request(options);
 
 ```
 
